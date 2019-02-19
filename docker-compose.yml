@@ -1,0 +1,78 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    env_file:
+      - ./api-gateway/docker.env
+    ports:
+      - "8080:8080"
+    networks:
+      - gme
+    #volumes:
+    #  - ./service-1:/app
+    links:
+      - service1
+      - service2
+    restart: on-failure
+    deploy:
+      mode: replicated
+      replicas: 2
+      labels: [APP=API]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+  service1:
+    build:
+      context: ./service-1
+      dockerfile: Dockerfile
+    env_file:
+      - ./service-1/docker.env
+    ports:
+      - "8082:8080"
+    networks:
+      - gme
+    #volumes:
+    #  - ./service-1:/app
+    restart: on-failure
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=API]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+  service2:
+    build:
+      context: ./service-2
+      dockerfile: Dockerfile
+    env_file:
+      - ./service-2/docker.env
+    ports:
+      - "8083:8080"
+    networks:
+      - gme
+    #volumes:
+    #  - ./service-1:/app
+    restart: on-failure
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=API]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+networks:
+  gme:
+    driver: bridge

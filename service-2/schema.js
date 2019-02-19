@@ -1,28 +1,23 @@
-const { makeExecutableSchema } = require('graphql-tools');
+const {makeExecutableSchema} = require('graphql-tools');
 const data = require('./data');
 
 // SCHEMA DEFINITION
-const typeDefs = `
-type Query {
-  article(id: ID!): Article
-}
-type Article {
-  id: ID!
-  title: String
-  url: String
-}`
+const typeDefs = require('./schema.graphql');
 
 // RESOLVERS
 const resolvers = {
-	Query: {
-		article: (root, args, context, info) => {
-			return data.find(item => item.id == args.id);
-		}
-	},
-}
+    Query: {
+        articleById: (root, args, context, info) => {
+            return data.find(item => item.id === parseInt(args.id));
+        },
+        articlesByUserId: (root, args, context, info) => {
+            return data.filter(item => item.userId === parseInt(args.userId));
+        }
+    },
+};
 
 // (EXECUTABLE) SCHEMA
 module.exports = makeExecutableSchema({
-	typeDefs,
-	resolvers
-})
+    typeDefs,
+    resolvers
+});

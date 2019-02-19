@@ -1,6 +1,6 @@
 const express = require('express'),
 	app = express(),
-	PORT = process.env.PORT || 8081,
+	PORT = process.env.PORT || 8080,
 	bodyParser = require('body-parser'),
 	{ graphqlExpress } = require('apollo-server-express'),
 	{ mergeSchemas } = require('graphql-tools'),
@@ -8,8 +8,10 @@ const express = require('express'),
 
 //our graphql endpoints
 const endpoints = [
-	'http://localhost:8082/graphql',
-	'http://localhost:8083/graphql'
+	// 'http://localhost:8082/graphql',
+	// 'http://localhost:8083/graphql'
+	'http://service1:8082/graphql',
+	'http://service2:8083/graphql'
 ];
 //async function due to the async nature of grabbing all of our introspect schemas
 (async function () {
