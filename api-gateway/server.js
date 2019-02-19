@@ -18,6 +18,9 @@ const endpoints = [
 	try {
 		//promise.all to grab all remote schemas at the same time, we do not care what order they come back but rather just when they finish
 		allSchemas = await Promise.all(endpoints.map(ep => getIntrospectSchema(ep)));
+		app.get('/health-check', (req, res) => {
+			res.send("Health check passed");
+		});
 		//create function for /graphql endpoint and merge all the schemas
 		app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: mergeSchemas({ schemas: allSchemas }) }));
 		//start up a graphql endpoint for our main server

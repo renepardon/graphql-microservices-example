@@ -10,6 +10,9 @@ const express = require('express'),
     {graphqlExpress} = require('apollo-server-express'),
     schema = require('./schema');
 
+app.get('/health-check', (req, res) => {
+    res.send("Health check passed");
+});
 app.use('/graphql', bodyParser.json(), graphqlExpress({schema}));
 const PORT = process.env.PORT || 8083;
 app.listen(PORT, () => console.log('GraphQL API listening on port:' + PORT));

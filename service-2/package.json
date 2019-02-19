@@ -1,14 +1,27 @@
 {
   "name": "service-2",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example of a single instance of a GraphQL microservice",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:renepardon/graphql-microservices-example.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "David Novicki <supercycle91@gmail.com>",
-  "license": "ISC",
+  "keywords": [
+    "GraphQL",
+    "Microservice",
+    "Express",
+    "NodeJS",
+    "Docker",
+    "kubernetes",
+    "k8s"
+  ],
+  "author": "Christoph René Pardon <rene.pardon@boonweb.de>",
+  "license": "MIT",
   "dependencies": {
     "apollo-server-express": "^1.3.2",
     "body-parser": "^1.18.2",

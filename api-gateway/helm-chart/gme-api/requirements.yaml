@@ -1,0 +1,7 @@
+#dependencies:
+#  - name: gme-service1
+#    repository: https://cloud.docker.com/u/renepardon/repository/docker/renepardon/gme-service1
+#    version: 1.0.x
+#  - name: gme-service2
+#    repository: https://cloud.docker.com/u/renepardon/repository/docker/renepardon/gme-service2
+#    version: 1.0.x

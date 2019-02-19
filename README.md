@@ -24,5 +24,59 @@ First create the `gme` network if it doesn't already exist. Then start all the s
 
 ## kubernetes
 
+### Docker commands for minikube
 
+Make docker commands working with minikube for current terminal session
 
+    eval $(minikube docker-env)
+
+### minikube
+
+    kubectl create secret docker-registry docker-hub-secret --docker-server=https://index.docker.io/v1 --docker-username=renepardon --docker-password="<password goes here>" --docker-email=<email goes here>
+    
+You could and should add a namespace with the **-n** flag on the `kubectl create secret` command.
+Later you could retrieve those information with:
+
+    kubectl get secret docker-hub-secret --output="jsonpath={.data.\.dockerconfigjson}" | base64 --decode
+
+> Instead of using public docker hub you could and should use your own private registry
+
+    cd api-gateway && \
+    docker build -t renepardon/gme-api:1.0.0 . && \
+    docker login
+
+    docker push renepardon/gme-api:1.0.0
+
+Install dependencies
+
+    helm dep update helm-chart/<helm-name>
+
+Ensure k8s cluster is running
+
+    kubectl cluster-info
+
+Install the helm chart
+    
+    helm install --name gme-api helm-chart/gme-api/
+
+If you have configuration issues you can run in dry mode with debug enabled
+
+    helm install --name gme-api --dry-run --debug helm-chart/gme-api/
+
+Or use the linter if you experience formatting issues
+
+    helm lint helm-chart/
+
+You would generally not use secrets from within values.yaml files. You should use the **-set** option of `helm install`
+instead. E.g.
+
+    helm install --name gme-api --set mongodb.mongodbRootPassword=<PASSWORD> helm-chart/gme-api/
+
+To update the chart within kubernetes later on you could simple run an update from within the corresponding service 
+folder
+
+     helm repo update helm-chart/gme-api/
+
+In order to use the same command when installing and upgrading a release, use the following command:
+
+    helm upgrade --install <release name> --values <values file> <chart directory>

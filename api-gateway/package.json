@@ -1,8 +1,12 @@
 {
-  "name": "main-api",
+  "name": "gme-api",
   "version": "1.0.0",
-  "description": "Main GraphQL API wiht a purpose to gave all other GraphQL instances to one API.",
+  "description": "Main GraphQL API with a purpose to gave all other GraphQL instances to one API.",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:renepardon/graphql-microservices-example.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -11,10 +15,13 @@
     "GraphQL",
     "Microservices",
     "Express",
-    "NodeJS"
+    "NodeJS",
+    "Docker",
+    "kubernetes",
+    "k8s"
   ],
-  "author": "David Novicki <supercycle91@gmail.com>",
-  "license": "ISC",
+  "author": "Christoph René Pardon <rene.pardon@boonweb.de>",
+  "license": "MIT",
   "dependencies": {
     "apollo-link-http": "^1.3.2",
     "apollo-server-express": "^1.3.2",

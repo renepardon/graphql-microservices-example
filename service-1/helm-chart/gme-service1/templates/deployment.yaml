@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      securityContext:
+        runAsUser: 1001
+        fsGroup: 1001
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: internalport
+              containerPort: {{ .Values.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /health-check
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 3
+          #readinessProbe:
+          #  httpGet:
+          #    path: /health-check
+          #    port: {{ .Values.service.internalPort }}
+          #  initialDelaySeconds: 5
+          #  periodSeconds: 5
+          #  timeoutSeconds: 1
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
