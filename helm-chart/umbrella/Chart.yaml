@@ -2,3 +2,15 @@ apiVersion: v1
 description: A Helm chart for Kubernetes
 name: umbrella
 version: 1.0.0
+keywords:
+  - api-gateway
+  - microservices
+  - graphql
+  - docker
+  - kubernetes
+  - k8s
+maintainers:
+  - name: Christoph René Pardon
+    email: rene.pardon@boonweb.de
+home: https://renepardon.de
+icon: https://www.boonweb.de/images/logo.png

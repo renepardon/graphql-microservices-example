@@ -10,8 +10,10 @@ const express = require('express'),
 const endpoints = [
 	// 'http://localhost:8082/graphql',
 	// 'http://localhost:8083/graphql'
-	'http://service1:8082/graphql',
-	'http://service2:8083/graphql'
+	// 'http://service1:8082/graphql',
+	// 'http://service2:8083/graphql'
+	'http://gme-service1:8080/graphql',
+	'http://gme-service2:8080/graphql'
 ];
 //async function due to the async nature of grabbing all of our introspect schemas
 (async function () {

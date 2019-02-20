@@ -1,45 +1,51 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ include "gme-api.fullname" . }}
   labels:
-    app: {{ template "fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    app.kubernetes.io/name: {{ include "gme-api.name" . }}
+    helm.sh/chart: {{ include "gme-api.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "gme-api.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "fullname" . }}
+        app.kubernetes.io/name: {{ include "gme-api.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      securityContext:
-        runAsUser: 1001
-        fsGroup: 1001
-      imagePullSecrets:
-        - name: {{ .Values.image.pullSecret }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: internalport
-              containerPort: {{ .Values.service.internalPort }}
+            - name: http
+              containerPort: 80
+              protocol: TCP
           livenessProbe:
             httpGet:
-              path: /health-check
-              port: {{ .Values.service.internalPort }}
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            timeoutSeconds: 5
-            failureThreshold: 3
-            #readinessProbe:
-            #  httpGet:
-            #    path: /health-check
-            #    port: {{ .Values.service.internalPort }}
-            #  initialDelaySeconds: 5
-            #  periodSeconds: 5
-            #  timeoutSeconds: 1
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

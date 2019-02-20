@@ -1,7 +1,10 @@
-#dependencies:
-#  - name: gme-service1
-#    repository: https://cloud.docker.com/u/renepardon/repository/docker/renepardon/gme-service1
-#    version: 1.0.x
-#  - name: gme-service2
-#    repository: https://cloud.docker.com/u/renepardon/repository/docker/renepardon/gme-service2
-#    version: 1.0.x
+dependencies:
+  - name: gme-service1
+    repository: file://../../service-1/helm-chart/gme-service1
+    version: 1.0.x
+  - name: gme-service2
+    repository: file://../../service-2/helm-chart/gme-service2
+    version: 1.0.x
+  - name: gme-api
+    repository: file://../../api-gateway/helm-chart/gme-api
+    version: 1.0.x

@@ -1,0 +1,12 @@
+dependencies:
+- name: gme-service1
+  repository: file://../../service-1/helm-chart/gme-service1
+  version: 1.0.0
+- name: gme-service2
+  repository: file://../../service-2/helm-chart/gme-service2
+  version: 1.0.0
+- name: gme-api
+  repository: file://../../api-gateway/helm-chart/gme-api
+  version: 1.0.0
+digest: sha256:83edd5d1e37cb72da1262db9e6797defb542ea0b9ddf72498004ae45985da681
+generated: 2019-02-20T11:55:54.756301+01:00

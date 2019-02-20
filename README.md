@@ -7,6 +7,10 @@ API. This is a great practice for easily connecting large nets of microservices 
 
 # Usage
 
+## Useful commands
+
+Have a look at the [README-commands.md](README-commands.md) file for useful commands during this setup.
+
 ## General
 
     npm install-all
@@ -17,66 +21,35 @@ same way. It's optimized for running in docker. So the endpoints within `api-gat
 
 ## Docker
 
-First create the `gme` network if it doesn't already exist. Then start all the services and the API gateway.
+First create the `gme` network if it doesn't already exist. Then start all the services and the API gateway:
 
     docker network create gme
     docker-compose up -d
 
 ## kubernetes
 
-### Docker commands for minikube
+Just to ensure we start clean if Minikube is already installed ;) (you can also use this to reset it at any point)
+Make sure you adjust the `--vm-driver`-option within `minikube-reset.sh` based on your host system.
 
-Make docker commands working with minikube for current terminal session
+    ./minikube-reset.sh
 
-    eval $(minikube docker-env)
+Then let's install all required stuff to get started as quick as possible.
 
-### minikube
+    sudo ./minikube-install.sh
 
-    kubectl create secret docker-registry docker-hub-secret --docker-server=https://index.docker.io/v1 --docker-username=renepardon --docker-password="<password goes here>" --docker-email=<email goes here>
-    
-You could and should add a namespace with the **-n** flag on the `kubectl create secret` command.
-Later you could retrieve those information with:
+#### manually install the example app to your kubernetes cluster
 
-    kubectl get secret docker-hub-secret --output="jsonpath={.data.\.dockerconfigjson}" | base64 --decode
+    ./helm-dep-update helm-chart/
 
-> Instead of using public docker hub you could and should use your own private registry
+    cd helm-chart/umbrella/
+    helm dep update
+    helm upgrade --install gme-example .
 
-    cd api-gateway && \
-    docker build -t renepardon/gme-api:1.0.0 . && \
-    docker login
+# References
 
-    docker push renepardon/gme-api:1.0.0
-
-Install dependencies
-
-    helm dep update helm-chart/<helm-name>
-
-Ensure k8s cluster is running
-
-    kubectl cluster-info
-
-Install the helm chart
-    
-    helm install --name gme-api helm-chart/gme-api/
-
-If you have configuration issues you can run in dry mode with debug enabled
-
-    helm install --name gme-api --dry-run --debug helm-chart/gme-api/
-
-Or use the linter if you experience formatting issues
-
-    helm lint helm-chart/
-
-You would generally not use secrets from within values.yaml files. You should use the **-set** option of `helm install`
-instead. E.g.
-
-    helm install --name gme-api --set mongodb.mongodbRootPassword=<PASSWORD> helm-chart/gme-api/
-
-To update the chart within kubernetes later on you could simple run an update from within the corresponding service 
-folder
-
-     helm repo update helm-chart/gme-api/
-
-In order to use the same command when installing and upgrading a release, use the following command:
-
-    helm upgrade --install <release name> --values <values file> <chart directory>
+- [for more information about SSL and Authentication if required](https://docs.traefik.io/user-guide/kubernetes/)
+- [https://docs.traefik.io/user-guide/kubernetes/#path-based-routing](for path based routing)
+- [https://gist.github.com/innovia/fbba8259042f71db98ea8d4ad19bd708#file-kubernetes_add_service_account_kubeconfig-sh](automated installation/configuration)
+- [https://medium.com/@dusansusic/traefik-ingress-controller-for-k8s-c1137c9c05c4](traefik ingress) 
+- [https://tobiasmaier.info/posts/2018/03/13/hosting-helm-repo-on-gitlab-pages.html](host a public helm repository) use chartmuseum for a private repository
+- [https://github.com/helm/helm/blob/master/docs/chart_repository.md#the-index-file](public chart repository index file)
