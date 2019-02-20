@@ -19,7 +19,7 @@ You could and should add a namespace with the **-n** flag on the `kubectl create
 > Instead of using public docker hub you could use your own private registry
 
     cd api-gateway && \
-    docker build -t renepardon/gme-api:1.0.0 .
+    docker build -t renepardon/gme-api:1.0.0 . --no-cache
     docker login
     docker push renepardon/gme-api:1.0.0
 

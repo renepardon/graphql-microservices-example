@@ -116,11 +116,10 @@ helm install --name grafana \
     --set rbac.pspEnabled=false \
     --set rbac.create=false
 
-cd helm-chart/umbrella/ && \
-    helm dep update && \
-    helm delete --purge umbrella && \
-    helm lint . && \
-    helm install .
+cd helm-chart/umbrella/ && helm dep update
+helm delete --purge umbrella
+helm lint . && \
+helm install --dep-up .
 
 ### Finally, get the pods list and curl the cluster ip
 kubectl get pods --all-namespaces
