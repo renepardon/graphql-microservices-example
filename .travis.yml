@@ -25,4 +25,7 @@ before_script:
     done
 
 script:
-  - helm lint */
+  - helm lint ./service-1/helm-chart/gme-service1
+  - helm lint ./service-2/helm-chart/gme-service2
+  - helm lint ./api-gateway/helm-chart/gme-api
+  - helm lint ./helm-chart/umbrella

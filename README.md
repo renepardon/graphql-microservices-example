@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.com/renepardon/graphql-microservices-example.svg?branch=master)](https://travis-ci.com/renepardon/graphql-microservices-example)
+![GitHub](https://img.shields.io/github/license/renepardon/graphql-microservices-example.svg)
+
+
 # GraphQL Microservices example with Remote Stitching using NodeJS and ExpressJS
 
 This projects serves as an example project for Remote Stitching GraphQL instances together through a central GraphQL 
