@@ -8,6 +8,20 @@ fi
 
 VERSION=$1
 
-docker build -t renepardon/gme-api:${VERSION} ./api-gateway --no-cache
-docker build -t renepardon/gme-service1:${VERSION} ./service-1 --no-cache
-docker build -t renepardon/gme-service2:${VERSION} ./service-2 --no-cache
+docker build -t renepardon/gme-api:${VERSION} --no-cache \
+    --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+    --build-arg VCS_REF=`git rev-parse --short HEAD` \
+    --build-arg VERSION=${VERSION} \
+    ./api-gateway
+
+docker build -t renepardon/gme-service1:${VERSION} --no-cache \
+    --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+    --build-arg VCS_REF=`git rev-parse --short HEAD` \
+    --build-arg VERSION=${VERSION} \
+    ./service-1
+
+docker build -t renepardon/gme-service2:${VERSION} --no-cache \
+    --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+    --build-arg VCS_REF=`git rev-parse --short HEAD` \
+    --build-arg VERSION=${VERSION} \
+    ./service-2
