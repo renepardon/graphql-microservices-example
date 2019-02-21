@@ -1,0 +1,28 @@
+language: generic
+
+dist: trusty
+sudo: false
+
+env:
+  global:
+    - NAME="graphql-microservices-example"
+    - VERSION="1.0.2"
+
+install:
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
+  - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+  - chmod 700 get_helm.sh
+  - sudo ./get_helm.sh
+
+before_script:
+  - helm init --client-only
+  - helm repo add stable https://kubernetes-charts.storage.googleapis.com
+  - |
+    for chart in $(find . -name 'requirements.yaml'); do
+      helm dep build $(dirname ${chart})
+    done
+
+script:
+  - helm lint */
