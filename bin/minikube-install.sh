@@ -36,8 +36,6 @@ if ! [[ -x "$(command -v helm)" ]]; then
     sh ./get_helm.sh
 fi
 
-# Default initialization of helm/tiller and update the repo for fresh charts list
-helm init --wait
 # helm repo update
 # kubectl --namespace=kube-system get pods
 
@@ -99,38 +97,25 @@ helm init --wait
 # TBD: kubectl config use-context $USER \
 # TBD:     --kubeconfig=$KUBECONFIG_FILE
 
-### Install grafana and prometheus into development namespace
+### Install grafana and prometheus into kube-system namespace
 helm install \
     --name prometheus \
     stable/prometheus \
-    --tiller-namespace development \
+    --tiller-namespace kube-system \
     --kubeconfig config \
-    --namespace development \
+    --namespace kube-system \
     --set rbac.create=false
 
 helm install --name grafana \
     stable/grafana \
-    --tiller-namespace development \
+    --tiller-namespace kube-system \
     --kubeconfig config \
-    --namespace development \
+    --namespace kube-system \
     --set rbac.pspEnabled=false \
     --set rbac.create=false
-
-cd helm-chart/umbrella/ && helm dep update
-helm delete --purge umbrella
-helm lint . && \
-helm install --dep-up .
-
-### Finally, get the pods list and curl the cluster ip
-kubectl get pods --all-namespaces
-
-### Wait for pods to become available
-for i in {0..20}; do echo -ne "Wait $i of 20 seconds before continuing"'\r'; sleep 1; done; echo
-
-kubectl get pods --all-namespaces
 
 echo "Executing curl $(minikube ip):"
 curl $(minikube ip)
 echo "\n"
 
-watch -n 1 'kubectl get pods'
+watch -n 1 'kubectl get pods --all-namespaces'

@@ -19,9 +19,9 @@ You could and should add a namespace with the **-n** flag on the `kubectl create
 > Instead of using public docker hub you could use your own private registry
 
     cd api-gateway && \
-    docker build -t renepardon/gme-api:1.0.0 . --no-cache
+    docker build -t renepardon/gme-api:1.0.1 . --no-cache
     docker login
-    docker push renepardon/gme-api:1.0.0
+    docker push renepardon/gme-api:1.0.1
 
 ##### Install dependencies
 
@@ -63,3 +63,8 @@ later on you could simple run an update from within the corresponding service fo
 In order to use the same command when installing and upgrading a release, use the following command:
 
     helm upgrade --install <release name> --values <values file> <chart directory>
+
+##### Log tailing
+
+You can use `kubectl logs <podname>` or you use [Stern](https://github.com/wercker/stern). Which is a way better solution to tail logs based on regular 
+expressions.

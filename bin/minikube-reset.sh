@@ -9,3 +9,7 @@ minikube delete || true
 # virtualbox on windows, hyperkit on mac os, kvm2 on linux
 # minikube start --vm-driver ${1-"virtualbox"}
 minikube start --vm-driver ${1-"hyperkit"}
+
+# Default initialization of helm/tiller
+rm -rf ~/.helm/
+helm init --wait

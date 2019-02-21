@@ -9,6 +9,8 @@ RUN npm install
 # Final image
 FROM node:carbon-alpine
 
+ENV PORT="8080"
+
 WORKDIR /app
 
 COPY --from=builder /app /app
@@ -19,5 +21,5 @@ RUN addgroup -g 1001 appuser && \
 RUN chown -R appuser:appuser /app
 USER appuser
 
-EXPOSE 8080
+EXPOSE $PORT
 CMD ["npm", "run", "start"]

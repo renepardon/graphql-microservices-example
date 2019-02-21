@@ -28,8 +28,12 @@ spec:
           env:
             - name: SERVICE_1_HOST
               value: {{ .Release.Name }}-gme-service1
+            - name: SERVICE_1_PORT
+              value: "8080"
             - name: SERVICE_2_HOST
               value: {{ .Release.Name }}-gme-service2
+            - name: SERVICE_2_PORT
+              value: "8080"
             - name: PORT
               value: "8080"
           ports:

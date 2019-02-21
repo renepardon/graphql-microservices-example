@@ -31,15 +31,19 @@ First create the `gme` network if it doesn't already exist. Then start all the s
 Just to ensure we start clean if Minikube is already installed ;) (you can also use this to reset it at any point)
 Make sure you adjust the `--vm-driver`-option within `minikube-reset.sh` based on your host system.
 
-    ./minikube-reset.sh
+    ./bin/minikube-reset.sh
 
 Then let's install all required stuff to get started as quick as possible.
 
-    sudo ./minikube-install.sh
+    sudo ./bin/minikube-install.sh
+
+Finally install the helm charts
+
+    ./bin/install.sh
 
 #### manually install the example app to your kubernetes cluster
 
-    ./helm-dep-update helm-chart/
+    ./bin/helm-dep-update helm-chart/
 
     cd helm-chart/umbrella/
     helm dep update

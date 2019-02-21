@@ -9,6 +9,11 @@ RUN npm install
 # Final image
 FROM node:carbon-alpine
 
+ENV SERVICE_1_HOST="service1"
+ENV SERVICE_1_PORT="8080"
+ENV SERVICE_2_HOST="service2"
+ENV SERVICE_2_PORT="8080"
+
 WORKDIR /app
 
 COPY --from=builder /app /app

@@ -1,6 +1,6 @@
 {
   "name": "graphql-microservices-example",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Central GraphQL API and microservices connected using remote schemas.",
   "main": "./api-gateway/server",
   "scripts": {
@@ -16,8 +16,8 @@
     "NodeJS",
     "ExpressJS"
   ],
-  "author": "David Novicki <supercycle91@gmail.com>",
-  "license": "ISC",
+  "author": "Christoph René Pardon <rene.pardon@boonweb.de>",
+  "license": "MIT",
   "dependencies": {
     "api-gateway": "file:api-gateway",
     "service-1": "file:service-1",

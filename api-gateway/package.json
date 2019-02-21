@@ -1,6 +1,6 @@
 {
   "name": "gme-api",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Main GraphQL API with a purpose to gave all other GraphQL instances to one API.",
   "main": "server.js",
   "repository": {
