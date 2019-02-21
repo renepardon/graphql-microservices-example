@@ -73,8 +73,8 @@ Finally install the helm charts
 ## References
 
 - [for more information about SSL and Authentication if required](https://docs.traefik.io/user-guide/kubernetes/)
-- [https://docs.traefik.io/user-guide/kubernetes/#path-based-routing](for path based routing)
-- [https://gist.github.com/innovia/fbba8259042f71db98ea8d4ad19bd708#file-kubernetes_add_service_account_kubeconfig-sh](automated installation/configuration)
-- [https://medium.com/@dusansusic/traefik-ingress-controller-for-k8s-c1137c9c05c4](traefik ingress) 
-- [https://tobiasmaier.info/posts/2018/03/13/hosting-helm-repo-on-gitlab-pages.html](host a public helm repository) use chartmuseum for a private repository
-- [https://github.com/helm/helm/blob/master/docs/chart_repository.md#the-index-file](public chart repository index file)
+- [for path based routing](https://docs.traefik.io/user-guide/kubernetes/#path-based-routing)
+- [automated installation/configuration](https://gist.github.com/innovia/fbba8259042f71db98ea8d4ad19bd708#file-kubernetes_add_service_account_kubeconfig-sh)
+- [traefik ingress](https://medium.com/@dusansusic/traefik-ingress-controller-for-k8s-c1137c9c05c4) 
+- [host a public helm repository](https://tobiasmaier.info/posts/2018/03/13/hosting-helm-repo-on-gitlab-pages.html) use chartmuseum for a private repository
+- [public chart repository index file](https://github.com/helm/helm/blob/master/docs/chart_repository.md#the-index-file)
