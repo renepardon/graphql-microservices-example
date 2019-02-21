@@ -26,11 +26,15 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: SERVICE_1_HOST
+              value: {{ .Release.Name }}-gme-service1
+            - name: SERVICE_2_HOST
+              value: {{ .Release.Name }}-gme-service2
             - name: PORT
               value: "8080"
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:

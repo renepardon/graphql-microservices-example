@@ -132,3 +132,5 @@ kubectl get pods --all-namespaces
 echo "Executing curl $(minikube ip):"
 curl $(minikube ip)
 echo "\n"
+
+watch -n 1 'kubectl get pods'
